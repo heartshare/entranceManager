@@ -14,8 +14,8 @@ use yii\db\ActiveRecord;
  * @property int $id
  * @property string $uuid
  * @property string $name
- * @property int $company
- * @property int $location
+ * @property int $companyId
+ * @property int $locationId
  * @property string $ip
  * @property int $port
  * @property string $version
@@ -25,14 +25,14 @@ use yii\db\ActiveRecord;
  * @property string $serialNumber
  * @property string $deviceModel
  * @property int $status 0=Inactive, 1=Active,
- * @property int $deviceStatus 0=Disconnected, 1=Connected,2=Communication Failed,3=Unknown
- 2=Communication Error
+ * @property int $deviceStatus 0=Disconnected, 1=Connected,2=Communication Failed,3=Unknown 2=Communication Error
+ * @property int $isPrimary 0=NO, 1=Yes
  * @property string $lastConnectedAt
  * @property string $createdAt
  * @property string $updatedAt
  *
- * @property Company $company0
- * @property Location $location0
+ * @property Company $company
+ * @property Location $location
  */
 class Device extends \yii\db\ActiveRecord
 {
@@ -72,10 +72,10 @@ class Device extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'company', 'location', 'ip'], 'required'],
+            [['name', 'companyId', 'locationId', 'ip'], 'required'],
             ['name', 'deviceCheck'],
             [['ip'], 'ip', 'ipv6' => false], // IPv4 address (IPv6 is disabled)
-            [['company', 'location', 'port', 'status', 'deviceStatus'], 'integer'],
+            [['companyId', 'locationId', 'port', 'status', 'deviceStatus', 'isPrimary'], 'integer'],
             [['lastConnectedAt', 'createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],
             [['name'], 'string', 'max' => 50],
@@ -84,8 +84,8 @@ class Device extends \yii\db\ActiveRecord
             [['osVersion', 'platform', 'fmVersion', 'serialNumber'], 'string', 'max' => 20],
             [['deviceModel'], 'string', 'max' => 25],
             [['uuid', 'name'], 'unique'],
-            [['company'], 'exist', 'skipOnError' => true, 'targetClass' => Company::class, 'targetAttribute' => ['company' => 'id']],
-            [['location'], 'exist', 'skipOnError' => true, 'targetClass' => Location::class, 'targetAttribute' => ['location' => 'id']],
+            [['companyId'], 'exist', 'skipOnError' => true, 'targetClass' => Company::class, 'targetAttribute' => ['company' => 'id']],
+            [['locationId'], 'exist', 'skipOnError' => true, 'targetClass' => Location::class, 'targetAttribute' => ['location' => 'id']],
         ];
     }
 
@@ -121,8 +121,8 @@ class Device extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'uuid' => Yii::t('app', 'Uuid'),
             'name' => Yii::t('app', 'Name'),
-            'company' => Yii::t('app', 'Company'),
-            'location' => Yii::t('app', 'Location'),
+            'companyId' => Yii::t('app', 'Company'),
+            'locationId' => Yii::t('app', 'Location'),
             'ip' => Yii::t('app', 'IP'),
             'port' => Yii::t('app', 'Port'),
             'version' => Yii::t('app', 'Version'),
@@ -133,6 +133,7 @@ class Device extends \yii\db\ActiveRecord
             'deviceModel' => Yii::t('app', 'Model'),
             'status' => Yii::t('app', 'Status'),
             'deviceStatus' => Yii::t('app', 'State'),
+            'isPrimary' => Yii::t('app', 'Type'),
             'lastConnectedAt' => Yii::t('app', 'Last Connect'),
             'createdAt' => Yii::t('app', 'Created At'),
             'updatedAt' => Yii::t('app', 'Updated At'),
@@ -144,9 +145,9 @@ class Device extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCompany0()
+    public function getCompany()
     {
-        return $this->hasOne(Company::class, ['id' => 'company']);
+        return $this->hasOne(Company::class, ['id' => 'companyId']);
     }
 
     /**
@@ -154,8 +155,8 @@ class Device extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getLocation0()
+    public function getLocation()
     {
-        return $this->hasOne(Location::class, ['id' => 'location']);
+        return $this->hasOne(Location::class, ['id' => 'locationId']);
     }
 }

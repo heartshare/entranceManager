@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\DeviceSearch $model */
+/** @var app\models\EmployeeSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="device-search">
+<div class="employee-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -22,31 +22,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'uuid') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'userId') ?>
 
-    <?= $form->field($model, 'company') ?>
+    <?= $form->field($model, 'userUid') ?>
 
-    <?= $form->field($model, 'location') ?>
+    <?= $form->field($model, 'role') ?>
 
-    <?php // echo $form->field($model, 'ip') ?>
+    <?php // echo $form->field($model, 'name') ?>
 
-    <?php // echo $form->field($model, 'port') ?>
+    <?php // echo $form->field($model, 'password') ?>
 
-    <?php // echo $form->field($model, 'version') ?>
+    <?php // echo $form->field($model, 'cardNo') ?>
 
-    <?php // echo $form->field($model, 'osVersion') ?>
-
-    <?php // echo $form->field($model, 'platform') ?>
-
-    <?php // echo $form->field($model, 'fmVersion') ?>
-
-    <?php // echo $form->field($model, 'serialNumber') ?>
-
-    <?php // echo $form->field($model, 'deviceModel') ?>
+    <?php // echo $form->field($model, 'finger') ?>
 
     <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'lastConnectedAt') ?>
 
     <?php // echo $form->field($model, 'createdAt') ?>
 

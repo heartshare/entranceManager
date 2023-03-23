@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Device;
+use app\models\Employee;
 
 /**
- * DeviceSearch represents the model behind the search form of `app\models\Device`.
+ * EmployeeSearch represents the model behind the search form of `app\models\Employee`.
  */
-class DeviceSearch extends Device
+class EmployeeSearch extends Employee
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class DeviceSearch extends Device
     public function rules()
     {
         return [
-            [['id', 'company', 'location', 'port', 'status'], 'integer'],
-            [['uuid', 'name', 'ip', 'version', 'osVersion', 'platform', 'fmVersion', 'serialNumber', 'deviceModel', 'lastConnectedAt', 'createdAt', 'updatedAt'], 'safe'],
+            [['id', 'role', 'status'], 'integer'],
+            [['uuid', 'userId', 'userUid', 'name', 'password', 'cardNo', 'finger', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class DeviceSearch extends Device
      */
     public function search($params)
     {
-        $query = Device::find();
+        $query = Employee::find();
 
         // add conditions that should always apply here
 
@@ -59,24 +59,21 @@ class DeviceSearch extends Device
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'company' => $this->company,
-            'location' => $this->location,
-            'port' => $this->port,
+            'role' => $this->role,
             'status' => $this->status,
-            'lastConnectedAt' => $this->lastConnectedAt,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
         $query->andFilterWhere(['like', 'uuid', $this->uuid])
+            ->andFilterWhere(['like', 'userId', $this->userId])
+            ->andFilterWhere(['like', 'userUid', $this->userUid])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'ip', $this->ip])
-            ->andFilterWhere(['like', 'version', $this->version])
-            ->andFilterWhere(['like', 'osVersion', $this->osVersion])
-            ->andFilterWhere(['like', 'platform', $this->platform])
-            ->andFilterWhere(['like', 'fmVersion', $this->fmVersion])
-            ->andFilterWhere(['like', 'serialNumber', $this->serialNumber])
-            ->andFilterWhere(['like', 'deviceModel', $this->deviceModel]);
+            ->andFilterWhere(['like', 'password', $this->password])
+            ->andFilterWhere(['like', 'cardNo', $this->cardNo])
+            ->andFilterWhere(['like', 'finger', $this->finger]);
+
+        $query->orderBy('userId');
 
         return $dataProvider;
     }

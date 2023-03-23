@@ -40,6 +40,15 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'port')->textInput() ?>
 
+    <?= $form->field($model, 'isPrimary')->widget(Select2::classname(), [
+        'data' => [1=>'Primary', 0=>'Secondary'],
+        'options' => ['placeholder' => 'Select a type ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
     </div>

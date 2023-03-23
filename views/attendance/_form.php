@@ -4,21 +4,29 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Location $model */
+/** @var app\models\Attendance $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="location-form">
+<div class="attendance-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'uuid')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'userId')->textInput() ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'state')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+    <?= $form->field($model, 'deviceId')->textInput() ?>
+
+    <?= $form->field($model, 'companyId')->textInput() ?>
+
+    <?= $form->field($model, 'locationId')->textInput() ?>
+
+    <?= $form->field($model, 'deviceTime')->textInput() ?>
+
+    <?= $form->field($model, 'isSync')->textInput() ?>
 
     <?= $form->field($model, 'createdAt')->textInput() ?>
 

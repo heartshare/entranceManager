@@ -59,36 +59,6 @@ class SiteController extends Controller
     }
 
 
-    private function device()
-    {
-        //$zk = new ZKTeco('118.179.202.220', 43705, 5); //Old Version Device
-        $zk = new ZKTeco('118.179.202.221', 43707, 5); //New Device
-        //$zk = new ZKTeco('123.0.20.194', 50501, 5); //New Device Deshi
-
-        //$zk = new ZKLibrary('118.179.202.220', 43705);  //Old Version Device
-        //$zk = new ZKLibrary('118.179.202.221', 43707); //New Device
-
-        $zk->connect();
-        //dd($zk->pinWidth());
-        //dd($zk->workCode());
-        //dd($zk->ssr());
-//        dd($zk->version());
-//        dd($zk->osVersion());
-//        dd($zk->platform());
-//        dd($zk->fmVersion());
-//        dd($zk->serialNumber());
-//        dd($zk->deviceModel());
-//        dd($zk->getTime());
-        //dd($zk->getFingerprint(1));
-        //dd($zk->sleep());
-        //$zk->removeUser(2);
-        dd($zk->getUser());
-        dd($zk->setUser(3, 45, 'Mehedee', '', Util::LEVEL_USER, 123465));
-        //$zk->disableDevice();
-        //dd($zk->clearAttendance());
-        //dd($zk->faceFunctionOn());
-        //dd($zk->getAttendance($zk->deviceModel()));
-    }
 
     /**
      * Displays homepage.
@@ -97,8 +67,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->device();
-        //return $this->render('index');
+        return $this->render('index');
     }
 
     /**

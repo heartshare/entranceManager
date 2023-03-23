@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Location $model */
+/** @var app\models\Employee $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Locations'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Employees'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="location-view">
+<div class="employee-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,8 +31,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'uuid',
-            'location',
-            'address',
+            'userId',
+            'userUid',
+            'role',
+            'name',
+            'password',
+            'cardNo',
+            'finger',
             'status',
             'createdAt',
             'updatedAt',

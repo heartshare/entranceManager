@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\models\CompanySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -30,14 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return $model->status ? "Active" : "Inactive";
+                }
+            ],
             'createdAt',
             //'updatedAt',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Company $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->uuid]);
-                 }
+                }
             ],
         ],
     ]); ?>

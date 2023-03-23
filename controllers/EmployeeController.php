@@ -2,16 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\Company;
-use app\models\CompanySearch;
+use app\components\EmployeesSync;
+use app\models\Employee;
+use app\models\EmployeeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CompanyController implements the CRUD actions for Company model.
+ * EmployeeController implements the CRUD actions for Employee model.
  */
-class CompanyController extends Controller
+class EmployeeController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +33,13 @@ class CompanyController extends Controller
     }
 
     /**
-     * Lists all Company models.
+     * Lists all Employee models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new CompanySearch();
+        $searchModel = new EmployeeSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +49,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Displays a single Company model.
+     * Displays a single Employee model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +62,13 @@ class CompanyController extends Controller
     }
 
     /**
-     * Creates a new Company model.
+     * Creates a new Employee model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Company();
+        $model = new Employee();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -82,8 +83,15 @@ class CompanyController extends Controller
         ]);
     }
 
+    public function actionSync()
+    {
+        EmployeesSync::sync();
+
+    }
+
+
     /**
-     * Updates an existing Company model.
+     * Updates an existing Employee model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +111,7 @@ class CompanyController extends Controller
     }
 
     /**
-     * Deletes an existing Company model.
+     * Deletes an existing Employee model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +125,15 @@ class CompanyController extends Controller
     }
 
     /**
-     * Finds the Company model based on its primary key value.
+     * Finds the Employee model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Company the loaded model
+     * @return Employee the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Company::findOne(['id' => $id])) !== null) {
+        if (($model = Employee::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

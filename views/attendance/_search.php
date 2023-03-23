@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\DeviceSearch $model */
+/** @var app\models\AttendanceSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="device-search">
+<div class="attendance-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
@@ -22,31 +22,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'uuid') ?>
 
-    <?= $form->field($model, 'name') ?>
+    <?= $form->field($model, 'userId') ?>
 
-    <?= $form->field($model, 'company') ?>
+    <?= $form->field($model, 'state') ?>
 
-    <?= $form->field($model, 'location') ?>
+    <?= $form->field($model, 'deviceId') ?>
 
-    <?php // echo $form->field($model, 'ip') ?>
+    <?php // echo $form->field($model, 'companyId') ?>
 
-    <?php // echo $form->field($model, 'port') ?>
+    <?php // echo $form->field($model, 'locationId') ?>
 
-    <?php // echo $form->field($model, 'version') ?>
+    <?php // echo $form->field($model, 'deviceTime') ?>
 
-    <?php // echo $form->field($model, 'osVersion') ?>
-
-    <?php // echo $form->field($model, 'platform') ?>
-
-    <?php // echo $form->field($model, 'fmVersion') ?>
-
-    <?php // echo $form->field($model, 'serialNumber') ?>
-
-    <?php // echo $form->field($model, 'deviceModel') ?>
-
-    <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'lastConnectedAt') ?>
+    <?php // echo $form->field($model, 'isSync') ?>
 
     <?php // echo $form->field($model, 'createdAt') ?>
 

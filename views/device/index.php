@@ -32,25 +32,30 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
 
+//            [
+//                'attribute' => 'company.name',
+//                'header' => 'Company',
+//                'value' => function ($model) {
+//                    return $model->company0->name;
+//                }
+//            ],
+//
+//            [
+//                'attribute' => 'location.location',
+//                'header' => 'Location',
+//                'value' => function ($model) {
+//                    return $model->location0->location;
+//                }
+//            ],
             [
-                'attribute' => 'company0.name',
-                'header' => 'Company',
+                'attribute' => 'isPrimary',
                 'value' => function ($model) {
-                    return $model->company0->name;
+                    return $model->isPrimary ? "Primary" : "Secondary";
                 }
             ],
-
-            [
-                'attribute' => 'location0.location',
-                'header' => 'Location',
-                'value' => function ($model) {
-                    return $model->location0->location;
-                }
-            ],
-
             'ip',
             'port',
-            'version',
+            //'version',
             //'osVersion',
             //'platform',
             //'fmVersion',
@@ -70,14 +75,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                 }
             ],
+
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
-                    if ($model->status === 0) {
-                        return "Inactive";
-                    } else {
-                        return "Active";
-                    }
+                    return $model->status ? "Active" : "Inactive";
                 }
             ],
             'lastConnectedAt',

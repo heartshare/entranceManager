@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Location;
+use app\models\Attendance;
 
 /**
- * LocationSearch represents the model behind the search form of `app\models\Location`.
+ * AttendanceSearch represents the model behind the search form of `app\models\Attendance`.
  */
-class LocationSearch extends Location
+class AttendanceSearch extends Attendance
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,8 @@ class LocationSearch extends Location
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['uuid', 'location', 'address', 'createdAt', 'updatedAt'], 'safe'],
+            [['id', 'userId', 'state', 'deviceId', 'companyId', 'locationId', 'isSync'], 'integer'],
+            [['uuid', 'deviceTime', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class LocationSearch extends Location
      */
     public function search($params)
     {
-        $query = Location::find();
+        $query = Attendance::find();
 
         // add conditions that should always apply here
 
@@ -59,14 +59,18 @@ class LocationSearch extends Location
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'userId' => $this->userId,
+            'state' => $this->state,
+            'deviceId' => $this->deviceId,
+            'companyId' => $this->companyId,
+            'locationId' => $this->locationId,
+            'deviceTime' => $this->deviceTime,
+            'isSync' => $this->isSync,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'uuid', $this->uuid])
-            ->andFilterWhere(['like', 'location', $this->location])
-            ->andFilterWhere(['like', 'address', $this->address]);
+        $query->andFilterWhere(['like', 'uuid', $this->uuid]);
 
         return $dataProvider;
     }
