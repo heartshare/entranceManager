@@ -31,8 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'name',
-            'company0.name',
-            'location0.location',
+
+            [
+                'attribute' => 'company0.name',
+                'header' => 'Company',
+                'value' => function ($model) {
+                    return $model->company0->name;
+                }
+            ],
+
+            [
+                'attribute' => 'location0.location',
+                'header' => 'Location',
+                'value' => function ($model) {
+                    return $model->location0->location;
+                }
+            ],
+
             'ip',
             'port',
             'version',
@@ -43,7 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'deviceModel',
             [
                 'attribute' => 'deviceStatus',
-                'header'=>'Device',
                 'value' => function ($model) {
                     if ($model->status === 0) {
                         return "Disconnected";

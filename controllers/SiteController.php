@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\ZKLibrary;
+use app\library\zkteco\Helper\Util;
 use app\library\zkteco\ZKTeco;
 use Yii;
 use yii\filters\AccessControl;
@@ -68,6 +69,9 @@ class SiteController extends Controller
         //$zk = new ZKLibrary('118.179.202.221', 43707); //New Device
 
         $zk->connect();
+        //dd($zk->pinWidth());
+        //dd($zk->workCode());
+        //dd($zk->ssr());
 //        dd($zk->version());
 //        dd($zk->osVersion());
 //        dd($zk->platform());
@@ -75,10 +79,15 @@ class SiteController extends Controller
 //        dd($zk->serialNumber());
 //        dd($zk->deviceModel());
 //        dd($zk->getTime());
-        //dd($zk->getUser());
+        //dd($zk->getFingerprint(1));
+        //dd($zk->sleep());
+        //$zk->removeUser(2);
+        dd($zk->getUser());
+        dd($zk->setUser(3, 45, 'Mehedee', '', Util::LEVEL_USER, 123465));
+        //$zk->disableDevice();
         //dd($zk->clearAttendance());
         //dd($zk->faceFunctionOn());
-        dd($zk->getAttendance($zk->deviceModel()));
+        //dd($zk->getAttendance($zk->deviceModel()));
     }
 
     /**
