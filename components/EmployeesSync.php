@@ -45,66 +45,82 @@ class EmployeesSync extends Component
         //dd($zk->getAttendance($zk->deviceModel()));
     }
 
-    public static function sync()
+    public static function users()
     {
-        $device = Device::findOne(['isPrimary' => 1]);
-        if ($device) {
 
-            $transaction = Yii::$app->db->beginTransaction();
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $employeeRows = [];
+            $employeeDeviceRows = [];
+            $device = Device::find()->orderBy('isPrimary DESC')->all();
 
-            try {
-                //$connection->createCommand($sql1)->execute();
+            foreach ($device as $device) {
                 $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
                 $zk->connect();
                 $users = $zk->getUser();
-                if ($users) {
-                    $employeeRows = [];
-                    $employeeDeviceRows = [];
-                    foreach ($users as $user) {
-                        $employeeRows[] = [
-                            'id' => null,
-                            'uuid' => Uuid::uuid1()->toString(),
-                            'userId' => (int)$user['userid'],
-                            'userUid' => (string)$user['uid'],
-                            'role' => (int)$user['role'],
-                            'name' => $user['name'],
-                            'password' => $user['password'],
-                            'cardNo' => $user['cardno'],
-                            'status' => 0
-                        ];
-
-                        $employeeDeviceRows[] = [
-                            'id' => null,
-                            'uuid' => Uuid::uuid1()->toString(),
-                            'employeeId' => (int)$user['userid'],
-                            'deviceId' => (string)$user['uid'],
-                            'finger' => (int)$user['role'],
-                        ];
-
-                    }
-                    $employeeBulk = Yii::$app->db->createCommand()->batchInsert(Employee::tableName(),
-                        ['id', 'uuid', 'userId', 'userUid', 'role', 'name', 'password', 'cardNo', 'status'],
-                        $employeeRows
-                    )->execute();
-
-                    $deviceBulk = Yii::$app->db->createCommand()->batchInsert(EmployeeDeviceRelation::tableName(),
-                        ['id', 'uuid', 'employeeId', 'deviceId', 'finger'],
-                        $employeeDeviceRows
-                    )->execute();
-
-                    $transaction->commit();
+                foreach ($users as $user) {
+                    $employeeRows[] = [
+                        'id' => null,
+                        'uuid' => Uuid::uuid1()->toString(),
+                        'userId' => (int)$user['userid'],
+                        'userUid' => (string)$user['uid'],
+                        'role' => (int)$user['role'],
+                        'name' => $user['name'],
+                        'password' => $user['password'],
+                        'cardNo' => $user['cardno'],
+                        'status' => 0
+                    ];
+                    $employeeDeviceRows[] = [
+                        'id' => null,
+                        'uuid' => Uuid::uuid1()->toString(),
+                        'employeeId' => (int)$user['userid'],
+                        'deviceId' => $device->id,
+                        'finger' => (int)$user['role'],
+                    ];
                 }
-
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                throw $e;
-            } catch (\Throwable $e) {
-                $transaction->rollBack();
-                throw $e;
             }
 
+            $command = Yii::$app->db->createCommand()->batchInsert(Employee::tableName(),
+                ['id', 'uuid', 'userId', 'userUid', 'role', 'name', 'password', 'cardNo', 'status'], $employeeRows);
+            $command->setRawSql($command->getRawSql(). ' ON DUPLICATE KEY UPDATE userId=userId');
+            $command->execute();
 
+            $commandRel = Yii::$app->db->createCommand()->batchInsert(EmployeeDeviceRelation::tableName(),
+                ['id', 'uuid', 'employeeId', 'deviceId', 'finger'], $employeeDeviceRows);
+
+            $commandRel->setRawSql($commandRel->getRawSql(). ' ON DUPLICATE KEY UPDATE employeeId=employeeId');
+            $commandRel->execute();
+
+            return $transaction->commit();
+
+        } catch
+        (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            throw $e;
         }
     }
+
+    public static function finger()
+    {
+        $device = Device::findOne(['isPrimary' =>1]);
+        if($device){
+            $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
+            if($zk->connect()){
+                $employees = Employee::find()->where(['finger' =>null])->limit(10)->orderBy('userId')->all();
+                foreach ($employees as $employee){
+                    var_dump($zk->getFingerprint($employee->userUid));
+                    $employee->finger = $zk->getFingerprint($employee->userUid);
+                    if(!$employee->save()){
+                        dd($employee->getErrors());
+                        die();
+                    }
+                }
+            }
+        }
+    }
+
 
 }

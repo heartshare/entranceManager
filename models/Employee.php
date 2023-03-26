@@ -15,7 +15,7 @@ use Yii;
  * @property string|null $name
  * @property string|null $password
  * @property string|null $cardNo
- * @property resource|null $finger
+ * @property string|null $finger
  * @property int $status 0=Sync 1=FingerSync 2=Completed
  * @property string $createdAt
  * @property string $updatedAt

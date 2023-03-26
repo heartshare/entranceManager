@@ -85,8 +85,15 @@ class EmployeeController extends Controller
 
     public function actionSync()
     {
-        EmployeesSync::sync();
-
+        try {
+            if(EmployeesSync::users()){
+                Yii::$app->session->setFlash('success', "User created successfully.");
+                return $this->redirect(['index']);
+            }
+            //EmployeesSync::finger();
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
+        }
     }
 
 
