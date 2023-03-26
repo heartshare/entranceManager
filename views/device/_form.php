@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Constant;
 use app\models\Company;
 use app\models\Location;
 use kartik\select2\Select2;
@@ -40,8 +41,17 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'port')->textInput() ?>
 
+    <?= $form->field($model, 'status')->widget(Select2::classname(), [
+        'data' => Constant::DEVICE_STATE,
+        'options' => ['placeholder' => 'Select a status ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+
     <?= $form->field($model, 'isPrimary')->widget(Select2::classname(), [
-        'data' => [1=>'Primary', 0=>'Secondary'],
+        'data' => Constant::DEVICE_TYPE,
         'options' => ['placeholder' => 'Select a type ...'],
         'pluginOptions' => [
             'allowClear' => true

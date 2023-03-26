@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Constant;
 use app\models\Device;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -32,59 +33,37 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'name',
 
-//            [
-//                'attribute' => 'company.name',
-//                'header' => 'Company',
-//                'value' => function ($model) {
-//                    return $model->company0->name;
-//                }
-//            ],
-//
-//            [
-//                'attribute' => 'location.location',
-//                'header' => 'Location',
-//                'value' => function ($model) {
-//                    return $model->location0->location;
-//                }
-//            ],
+            [
+                'attribute' => 'company.name',
+                'header' => 'Company',
+                'value' => function ($model) {
+                    return $model->company->name;
+                }
+            ],
             [
                 'attribute' => 'isPrimary',
                 'value' => function ($model) {
-                    return $model->isPrimary ? "Primary" : "Secondary";
+                    return Constant::DEVICE_TYPE[$model->isPrimary];
                 }
             ],
             'ip',
             'port',
-            //'version',
-            //'osVersion',
-            //'platform',
-            //'fmVersion',
             'serialNumber',
             'deviceModel',
             [
                 'attribute' => 'deviceStatus',
                 'value' => function ($model) {
-                    if ($model->status === 0) {
-                        return "Disconnected";
-                    } else if ($model->status === 1) {
-                        return "Connected";
-                    } else if ($model->status === 3) {
-                        return "Communication Error";
-                    } else {
-                        return "Unknown";
-                    }
+                    return Constant::DEVICE_STATUS_LIST[$model->deviceStatus];
                 }
             ],
 
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
-                    return $model->status ? "Active" : "Inactive";
+                    return Constant::DEVICE_STATE[$model->status];
                 }
             ],
             'lastConnectedAt',
-            //'createdAt',
-            //'updatedAt',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Device $model, $key, $index, $column) {

@@ -52,7 +52,7 @@ class EmployeesSync extends Component
         try {
             $employeeRows = [];
             $employeeDeviceRows = [];
-            $device = Device::find()->orderBy('isPrimary DESC')->all();
+            $device = Device::find()->where(['status'=>Constant::DEVICE_ACTIVE])->orderBy('isPrimary DESC')->all();
 
             foreach ($device as $device) {
                 $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
@@ -121,6 +121,5 @@ class EmployeesSync extends Component
             }
         }
     }
-
 
 }

@@ -10,7 +10,8 @@ use Yii;
  * @property int $id
  * @property string $uuid
  * @property int $userId
- * @property int $state 1=FingerPrint, 4=RFID Card, 25=Palm 15=Face
+ * @property int $state 1=FingerPrint, 4=RFID Card, 25=Palm
+ 15=Face
  * @property int $deviceId
  * @property int $companyId
  * @property int $locationId
@@ -22,6 +23,7 @@ use Yii;
  * @property Company $company
  * @property Device $device
  * @property Location $location
+ * @property Employee $employee
  */
 class Attendance extends \yii\db\ActiveRecord
 {
@@ -64,11 +66,22 @@ class Attendance extends \yii\db\ActiveRecord
             'companyId' => Yii::t('app', 'Company ID'),
             'locationId' => Yii::t('app', 'Location ID'),
             'deviceTime' => Yii::t('app', 'Device Time'),
-            'isSync' => Yii::t('app', 'Is Sync'),
+            'isSync' => Yii::t('app', 'Sync'),
             'createdAt' => Yii::t('app', 'Created At'),
             'updatedAt' => Yii::t('app', 'Updated At'),
         ];
     }
+
+    /**
+     * Gets query for [[Employee]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEmployee()
+    {
+        return $this->hasOne(Employee::class, ['userId' => 'userId']);
+    }
+
 
     /**
      * Gets query for [[Company]].

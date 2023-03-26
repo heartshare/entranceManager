@@ -3,3 +3,4 @@
 <123.0.20.194> [22.03.2023 13:08:10] (app\library\zkteco\Helper\Attendance::get) Received: 378876 of 388084 bytes
 <123.0.20.194> [23.03.2023 09:14:13] (app\library\zkteco\Helper\Attendance::get) Received: 396050 of 400138 bytes
 <123.0.20.194> [23.03.2023 10:41:18] (app\library\zkteco\Helper\Attendance::get) Received: 400298 of 401314 bytes
+<123.0.20.194> [26.03.2023 16:38:34] (app\library\zkteco\Helper\Attendance::get) Received: 409363 of 410379 bytes

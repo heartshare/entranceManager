@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AttendanceSync;
 use app\models\Attendance;
 use app\models\AttendanceSearch;
 use yii\web\Controller;
@@ -47,9 +48,9 @@ class AttendanceController extends Controller
         ]);
     }
 
-    public function actionSync()
+    public function actionCreate()
     {
-
+        AttendanceSync::sync();
     }
     /**
      * Displays a single Attendance model.
