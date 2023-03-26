@@ -7,25 +7,34 @@ use yii\base\Component;
 
 class Constant extends Component
 {
+
+    const USER = 0;
+    const SUPERADMIN = 1;
     const DEVICE_PRIMARY_YES = 1;
     const DEVICE_SECONDARY_YES = 0;
 
-    const DEVICE_ACTIVE = 1;
-    const DEVICE_INACTIVE = 0;
+    const COMMON_ACTIVE = 1;
+    const COMMON_INACTIVE = 0;
 
     const DEVICE_STATUS_DISCONNECTED = 0;
     const DEVICE_STATUS_CONNECTED = 1;
     const DEVICE_STATUS_COMMUNICATION_ERROR = 2;
     const DEVICE_STATUS_UNKNOWN = 3;
 
+    const ROLE = [
+        self::USER => 'User',
+        self::SUPERADMIN => 'SuperAdmin',
+    ];
+
+
     const DEVICE_TYPE = [
         self::DEVICE_PRIMARY_YES => 'Primary',
         self::DEVICE_SECONDARY_YES => 'Secondary',
     ];
 
-    const DEVICE_STATE = [
-        self::DEVICE_ACTIVE => 'Active',
-        self::DEVICE_INACTIVE => 'Inactive',
+    const COMMON_STATUS = [
+        self::COMMON_ACTIVE => 'Active',
+        self::COMMON_INACTIVE => 'Inactive',
     ];
 
     const DEVICE_STATUS_LIST = [

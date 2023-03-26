@@ -24,8 +24,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'userId') ?>
 
-    <?= $form->field($model, 'userUid') ?>
-
     <?= $form->field($model, 'role') ?>
 
     <?php // echo $form->field($model, 'name') ?>

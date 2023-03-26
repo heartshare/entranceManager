@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Constant;
 use app\models\Company;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
-                    return $model->status ? "Active" : "Inactive";
+                    return Constant::COMMON_STATUS[$model->status];
                 }
             ],
             'createdAt',

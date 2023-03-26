@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $uuid
+ * @property string $deviceUid
  * @property int $employeeId
  * @property int $deviceId
  * @property int $finger
@@ -35,6 +36,7 @@ class EmployeeDeviceRelation extends \yii\db\ActiveRecord
             [['employeeId', 'deviceId', 'finger'], 'integer'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],
+            [['deviceUid'], 'string', 'max' => 10],
         ];
     }
 
@@ -46,6 +48,7 @@ class EmployeeDeviceRelation extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'uuid' => Yii::t('app', 'Uuid'),
+            'deviceUid' => Yii::t('app', 'Device User ID'),
             'employeeId' => Yii::t('app', 'Employee ID'),
             'deviceId' => Yii::t('app', 'Device ID'),
             'finger' => Yii::t('app', 'Finger'),

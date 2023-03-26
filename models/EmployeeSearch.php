@@ -18,7 +18,7 @@ class EmployeeSearch extends Employee
     {
         return [
             [['id', 'role', 'status'], 'integer'],
-            [['uuid', 'userId', 'userUid', 'name', 'password', 'cardNo', 'finger', 'createdAt', 'updatedAt'], 'safe'],
+            [['uuid', 'userId', 'name', 'password', 'cardNo', 'finger', 'createdAt', 'updatedAt'], 'safe'],
         ];
     }
 
@@ -67,7 +67,6 @@ class EmployeeSearch extends Employee
 
         $query->andFilterWhere(['like', 'uuid', $this->uuid])
             ->andFilterWhere(['like', 'userId', $this->userId])
-            ->andFilterWhere(['like', 'userUid', $this->userUid])
             ->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'cardNo', $this->cardNo])

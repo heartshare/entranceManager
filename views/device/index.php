@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
-                    return Constant::DEVICE_STATE[$model->status];
+                    return Constant::COMMON_STATUS[$model->status];
                 }
             ],
             'lastConnectedAt',

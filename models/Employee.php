@@ -10,7 +10,6 @@ use Yii;
  * @property int $id
  * @property string $uuid
  * @property int $userId
- * @property string $userUid
  * @property int $role 0=User, 14=SuperAdmin
  * @property string|null $name
  * @property string|null $password
@@ -36,18 +35,16 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'userId', 'userUid', 'role'], 'required'],
+            [['uuid', 'userId', 'role'], 'required'],
             [['role', 'status', 'userId'], 'integer'],
             [['finger'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],
-            [['userUid'], 'string', 'max' => 10],
             [['password'], 'string', 'max' => 50],
             [['name'], 'string', 'max' => 50],
             [['cardNo'], 'string', 'max' => 20],
             [['userId'], 'unique'],
             [['uuid'], 'unique'],
-            [['userUid'], 'unique'],
         ];
     }
 
@@ -60,7 +57,6 @@ class Employee extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'uuid' => Yii::t('app', 'Uuid'),
             'userId' => Yii::t('app', 'Device User'),
-            'userUid' => Yii::t('app', 'Device UID'),
             'role' => Yii::t('app', 'Role'),
             'name' => Yii::t('app', 'Name'),
             'password' => Yii::t('app', 'Password'),

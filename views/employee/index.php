@@ -32,23 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'userId',
-            //'userUid',
             'name',
             [
                 'attribute' => 'role',
                 'value' => function ($model) {
-                    return $model->role ? "SuperAdmin" : "User";
+                    return \app\components\Constant::ROLE[$model->role];
                 }
             ],
-            //'password',
             'cardNo',
-//            [
-//                'attribute' => 'finger',
-//                'value' => function ($model) {
-//                    return $model->finger ? "Yes" : "Sync Need";
-//                }
-//            ],
-
             [
                 'attribute' => 'status',
                 'value' => function ($model) {

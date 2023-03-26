@@ -52,7 +52,7 @@ class EmployeesSync extends Component
         try {
             $employeeRows = [];
             $employeeDeviceRows = [];
-            $device = Device::find()->where(['status'=>Constant::DEVICE_ACTIVE])->orderBy('isPrimary DESC')->all();
+            $device = Device::find()->where(['status' => Constant::COMMON_ACTIVE])->orderBy('isPrimary DESC')->all();
 
             foreach ($device as $device) {
                 $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
@@ -63,7 +63,6 @@ class EmployeesSync extends Component
                         'id' => null,
                         'uuid' => Uuid::uuid1()->toString(),
                         'userId' => (int)$user['userid'],
-                        'userUid' => (string)$user['uid'],
                         'role' => (int)$user['role'],
                         'name' => $user['name'],
                         'password' => $user['password'],
@@ -73,6 +72,7 @@ class EmployeesSync extends Component
                     $employeeDeviceRows[] = [
                         'id' => null,
                         'uuid' => Uuid::uuid1()->toString(),
+                        'deviceUid' => (string)$user['uid'],
                         'employeeId' => (int)$user['userid'],
                         'deviceId' => $device->id,
                         'finger' => (int)$user['role'],
@@ -81,14 +81,14 @@ class EmployeesSync extends Component
             }
 
             $command = Yii::$app->db->createCommand()->batchInsert(Employee::tableName(),
-                ['id', 'uuid', 'userId', 'userUid', 'role', 'name', 'password', 'cardNo', 'status'], $employeeRows);
-            $command->setRawSql($command->getRawSql(). ' ON DUPLICATE KEY UPDATE userId=userId');
+                ['id', 'uuid', 'userId', 'role', 'name', 'password', 'cardNo', 'status'], $employeeRows);
+            $command->setRawSql($command->getRawSql() . ' ON DUPLICATE KEY UPDATE userId=userId');
             $command->execute();
 
             $commandRel = Yii::$app->db->createCommand()->batchInsert(EmployeeDeviceRelation::tableName(),
-                ['id', 'uuid', 'employeeId', 'deviceId', 'finger'], $employeeDeviceRows);
+                ['id', 'uuid', 'deviceUid', 'employeeId', 'deviceId', 'finger'], $employeeDeviceRows);
 
-            $commandRel->setRawSql($commandRel->getRawSql(). ' ON DUPLICATE KEY UPDATE employeeId=employeeId');
+            $commandRel->setRawSql($commandRel->getRawSql() . ' ON DUPLICATE KEY UPDATE employeeId=employeeId');
             $commandRel->execute();
 
             return $transaction->commit();
@@ -105,15 +105,15 @@ class EmployeesSync extends Component
 
     public static function finger()
     {
-        $device = Device::findOne(['isPrimary' =>1]);
-        if($device){
+        $device = Device::findOne(['isPrimary' => 1]);
+        if ($device) {
             $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
-            if($zk->connect()){
-                $employees = Employee::find()->where(['finger' =>null])->limit(10)->orderBy('userId')->all();
-                foreach ($employees as $employee){
+            if ($zk->connect()) {
+                $employees = Employee::find()->where(['finger' => null])->limit(10)->orderBy('userId')->all();
+                foreach ($employees as $employee) {
                     var_dump($zk->getFingerprint($employee->userUid));
                     $employee->finger = $zk->getFingerprint($employee->userUid);
-                    if(!$employee->save()){
+                    if (!$employee->save()) {
                         dd($employee->getErrors());
                         die();
                     }
