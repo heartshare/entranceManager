@@ -52,9 +52,8 @@ class EmployeesSync extends Component
         try {
             $employeeRows = [];
             $employeeDeviceRows = [];
-            $device = Device::find()->where(['status' => Constant::COMMON_ACTIVE])->orderBy('isPrimary DESC')->all();
-
-            foreach ($device as $device) {
+            $devices = Device::find()->where(['status' => Constant::COMMON_ACTIVE])->orderBy('isPrimary DESC')->all();
+            foreach ($devices as $device) {
                 $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
                 $zk->connect();
                 $users = $zk->getUser();
@@ -99,7 +98,11 @@ class EmployeesSync extends Component
             throw $e;
         } catch (\Throwable $e) {
             $transaction->rollBack();
+
+            dd($e->getMessage());
+
             throw $e;
+
         }
     }
 
