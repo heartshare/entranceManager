@@ -9,7 +9,9 @@ class Constant extends Component
 {
 
     const USER = 0;
-    const SUPERADMIN = 1;
+    const UNKNOWN_USER = 1;
+    const SUPERADMIN = 14;
+
     const DEVICE_PRIMARY_YES = 1;
     const DEVICE_SECONDARY_YES = 0;
 
@@ -24,6 +26,7 @@ class Constant extends Component
     const ROLE = [
         self::USER => 'User',
         self::SUPERADMIN => 'SuperAdmin',
+        self::UNKNOWN_USER => 'Unknown',
     ];
 
 

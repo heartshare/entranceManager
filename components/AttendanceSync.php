@@ -88,20 +88,17 @@ class AttendanceSync extends Component
     public static function sync()
     {
 
-        self::last30Mins(date('Y-m-d H:i:s'));
-        die();
-
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $attendanceRows = [];
-            $devices = Device::find()->where(['status' => Constant::DEVICE_ACTIVE])->orderBy('isPrimary DESC')->all();
+            $devices = Device::find()->where(['status' => Constant::COMMON_ACTIVE])->orderBy('isPrimary DESC')->all();
             foreach ($devices as $device) {
                 if (!empty($device->deviceModel)) {
                     $zk = new ZKTeco($device->ip, $device->port, 5); //New Device
                     $zk->connect();
                     $attendances = $zk->getAttendance($device->deviceModel);
                     foreach ($attendances as $attendance) {
-                        if(self::isToday(date('Y-m-d'), $attendance['timestamp'])){
+                        if (self::isToday(date('Y-m-d'), $attendance['timestamp'])) {
                             $attendanceRows[] = [
                                 'id' => null,
                                 'uuid' => Uuid::uuid1()->toString(),

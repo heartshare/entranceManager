@@ -72,7 +72,7 @@ class EmployeesSync extends Component
                     $employeeDeviceRows[] = [
                         'id' => null,
                         'uuid' => Uuid::uuid1()->toString(),
-                        'deviceUid' => (string)$user['uid'],
+                        'deviceUid' => (int)$user['uid'],
                         'employeeId' => (int)$user['userid'],
                         'deviceId' => $device->id,
                         'finger' => (int)$user['role'],

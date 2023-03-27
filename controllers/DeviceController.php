@@ -68,10 +68,15 @@ class DeviceController extends Controller
     public function actionCreate()
     {
         $model = new Device();
-
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model->load($this->request->post());
+            if ($model->save()) {
+                return $this->redirect(['index']);
+            } else {
+
+                dd($model);
+
+                dd($model->getErrors());
             }
         } else {
             $model->loadDefaultValues();
@@ -94,7 +99,7 @@ class DeviceController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

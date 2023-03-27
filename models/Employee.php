@@ -2,7 +2,10 @@
 
 namespace app\models;
 
+use app\behaviors\UuidBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "employee".
@@ -21,6 +24,29 @@ use Yii;
  */
 class Employee extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => UuidBehavior::class,
+                'uuidAttribute' => 'uuid',
+            ],
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'createdAt',
+                'updatedAtAttribute' => 'updatedAt',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['createdAt', 'updatedAt'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updatedAt'],
+                ],
+                // if you're using datetime instead of UNIX timestamp:
+                'value' => function () {
+                    return date('Y-m-d H:i:s');
+                },
+            ],
+        ];
+    }
     /**
      * {@inheritdoc}
      */
@@ -35,7 +61,7 @@ class Employee extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'userId', 'role'], 'required'],
+            [['userId', 'role', 'name', 'status'], 'required'],
             [['role', 'status', 'userId'], 'integer'],
             [['finger'], 'string'],
             [['createdAt', 'updatedAt'], 'safe'],
@@ -56,7 +82,7 @@ class Employee extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'uuid' => Yii::t('app', 'Uuid'),
-            'userId' => Yii::t('app', 'Device User'),
+            'userId' => Yii::t('app', 'User ID'),
             'role' => Yii::t('app', 'Role'),
             'name' => Yii::t('app', 'Name'),
             'password' => Yii::t('app', 'Password'),

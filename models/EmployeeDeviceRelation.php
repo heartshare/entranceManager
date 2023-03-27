@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property string $uuid
- * @property string $deviceUid
+ * @property int $deviceUid
  * @property int $employeeId
  * @property int $deviceId
  * @property int $finger
@@ -33,10 +33,9 @@ class EmployeeDeviceRelation extends \yii\db\ActiveRecord
     {
         return [
             [['uuid', 'employeeId', 'deviceId', 'createdAt', 'updatedAt'], 'required'],
-            [['employeeId', 'deviceId', 'finger'], 'integer'],
+            [['employeeId', 'deviceId', 'finger', 'deviceUid'], 'integer'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],
-            [['deviceUid'], 'string', 'max' => 10],
         ];
     }
 
@@ -48,9 +47,9 @@ class EmployeeDeviceRelation extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'uuid' => Yii::t('app', 'Uuid'),
-            'deviceUid' => Yii::t('app', 'Device User ID'),
+            'deviceUid' => Yii::t('app', 'Device UID'),
             'employeeId' => Yii::t('app', 'Employee ID'),
-            'deviceId' => Yii::t('app', 'Device ID'),
+            'deviceId' => Yii::t('app', 'Device'),
             'finger' => Yii::t('app', 'Finger'),
             'createdAt' => Yii::t('app', 'Created At'),
             'updatedAt' => Yii::t('app', 'Updated At'),

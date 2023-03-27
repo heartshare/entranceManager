@@ -1,24 +1,27 @@
 <?php
 
+use app\components\Constant;
+use kartik\select2\Select2;
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\Employee $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var yii\bootstrap5\ActiveForm $form */
 ?>
 
 <div class="employee-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'uuid')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'userId')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'userUid')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'role')->textInput() ?>
+    <?= $form->field($model, 'role')->widget(Select2::classname(), [
+        'data' => Constant::ROLE,
+        'options' => ['placeholder' => 'Select a role'],
+        'pluginOptions' => ['allowClear' => true],
+    ]);
+    ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -26,13 +29,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'cardNo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'finger')->textInput() ?>
+    <?= $form->field($model, 'status')->widget(Select2::classname(), [
+        'data' => Constant::COMMON_STATUS,
+        'options' => ['placeholder' => 'Select a status ...'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'createdAt')->textInput() ?>
-
-    <?= $form->field($model, 'updatedAt')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

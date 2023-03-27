@@ -19,18 +19,18 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'company')->widget(Select2::classname(), [
+    <?= $form->field($model, 'companyId')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Company::find()->all(), 'id', 'name'),
-        'options' => ['placeholder' => 'Select a company ...'],
+        'options' => ['placeholder' => 'Select a company'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]);
     ?>
 
-    <?= $form->field($model, 'location')->widget(Select2::classname(), [
+    <?= $form->field($model, 'locationId')->widget(Select2::classname(), [
         'data' => ArrayHelper::map(Location::find()->all(), 'id', 'location'),
-        'options' => ['placeholder' => 'Select a location ...'],
+        'options' => ['placeholder' => 'Select a location'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -42,7 +42,7 @@ use yii\helpers\Html;
     <?= $form->field($model, 'port')->textInput() ?>
 
     <?= $form->field($model, 'status')->widget(Select2::classname(), [
-        'data' => Constant::DEVICE_STATE,
+        'data' => Constant::COMMON_STATUS,
         'options' => ['placeholder' => 'Select a status ...'],
         'pluginOptions' => [
             'allowClear' => true
