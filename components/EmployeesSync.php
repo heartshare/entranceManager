@@ -98,9 +98,7 @@ class EmployeesSync extends Component
             throw $e;
         } catch (\Throwable $e) {
             $transaction->rollBack();
-
             dd($e->getMessage());
-
             throw $e;
 
         }
