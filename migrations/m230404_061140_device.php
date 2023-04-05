@@ -21,7 +21,6 @@ class m230404_061140_device extends Migration
     public function safeDown()
     {
         echo "m230404_061140_device cannot be reverted.\n";
-
         return false;
     }
 

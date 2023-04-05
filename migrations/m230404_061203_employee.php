@@ -21,7 +21,6 @@ class m230404_061203_employee extends Migration
     public function safeDown()
     {
         echo "m230404_061203_employee cannot be reverted.\n";
-
         return false;
     }
 

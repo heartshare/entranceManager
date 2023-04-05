@@ -21,7 +21,6 @@ class m230404_061124_location extends Migration
     public function safeDown()
     {
         echo "m230404_061124_location cannot be reverted.\n";
-
         return false;
     }
 

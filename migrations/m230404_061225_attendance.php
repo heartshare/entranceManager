@@ -21,7 +21,6 @@ class m230404_061225_attendance extends Migration
     public function safeDown()
     {
         echo "m230404_061225_attendance cannot be reverted.\n";
-
         return false;
     }
 

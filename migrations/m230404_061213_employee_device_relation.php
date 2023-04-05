@@ -21,7 +21,6 @@ class m230404_061213_employee_device_relation extends Migration
     public function safeDown()
     {
         echo "m230404_061213_employee_device_relation cannot be reverted.\n";
-
         return false;
     }
 
