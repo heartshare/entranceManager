@@ -29,7 +29,7 @@ class m230404_061124_location extends Migration
     {
         $this->createTable('location', [
             'id' => $this->primaryKey(),
-            'uuid' => $this->string(36),
+            'uuid' => $this->char(36),
             'location' => $this->string(50),
             'address' => $this->string(255),
             'status' => $this->smallInteger(1)->defaultValue(0)->notNull()->comment('0=Inactive, 1=Active'),

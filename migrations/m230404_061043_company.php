@@ -31,7 +31,7 @@ class m230404_061043_company extends Migration
     {
         $this->createTable('company', [
             'id' => $this->primaryKey(),
-            'uuid' => $this->string(36),
+            'uuid' => $this->char(36),
             'name' => $this->string(100),
             'status' => $this->smallInteger(1)->defaultValue(0)->notNull()->comment('0=Inactive, 1=Active'),
             'createdAt' => $this->timestamp()->defaultExpression('NOW()')->notNull(),

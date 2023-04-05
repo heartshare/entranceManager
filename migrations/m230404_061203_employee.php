@@ -29,7 +29,7 @@ class m230404_061203_employee extends Migration
     {
         $this->createTable('employee', [
             'id' => $this->primaryKey(),
-            'uuid' => $this->string(36),
+            'uuid' => $this->char(36),
             'userId' => $this->integer(),
             'role' => $this->smallInteger(),
             'name' => $this->string(50),
