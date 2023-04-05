@@ -58,7 +58,7 @@ class Company extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'name'], 'required'],
+            [['name'], 'required'],
             [['status'], 'integer'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],

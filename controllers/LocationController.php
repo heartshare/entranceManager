@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Location;
 use app\models\LocationSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,7 +72,8 @@ class LocationController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', "New location has been created.");
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -94,7 +96,8 @@ class LocationController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', "New location has been updated.");
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

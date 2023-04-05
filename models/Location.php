@@ -58,7 +58,7 @@ class Location extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uuid', 'location', 'address', 'status'], 'required'],
+            [['location', 'address', 'status'], 'required'],
             [['status'], 'integer'],
             [['createdAt', 'updatedAt'], 'safe'],
             [['uuid'], 'string', 'max' => 36],

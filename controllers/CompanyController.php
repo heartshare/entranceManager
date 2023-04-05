@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Company;
 use app\models\CompanySearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,7 +72,8 @@ class CompanyController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', "New company has been created.");
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -94,7 +96,8 @@ class CompanyController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success', "New company has been updated.");
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [
@@ -112,7 +115,6 @@ class CompanyController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['index']);
     }
 
@@ -125,7 +127,7 @@ class CompanyController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Company::findOne(['id' => $id])) !== null) {
+        if (($model = Company::findOne(['uuid' => $id])) !== null) {
             return $model;
         }
 

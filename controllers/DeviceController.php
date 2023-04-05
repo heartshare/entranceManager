@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Device;
 use app\models\DeviceSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -71,11 +72,9 @@ class DeviceController extends Controller
         if ($this->request->isPost) {
             $model->load($this->request->post());
             if ($model->save()) {
+                Yii::$app->session->setFlash('success', "New device has been created.");
                 return $this->redirect(['index']);
             } else {
-
-                dd($model);
-
                 dd($model->getErrors());
             }
         } else {
@@ -99,6 +98,7 @@ class DeviceController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "New company has been updated.");
             return $this->redirect(['index']);
         }
 

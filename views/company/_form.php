@@ -1,26 +1,34 @@
 <?php
 
+use app\components\Constant;
+use kartik\select2\Select2;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\Company $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var yii\bootstrap5\ActiveForm $form */
 ?>
 
 <div class="company-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'uuid')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'createdAt')->textInput() ?>
-
-    <?= $form->field($model, 'updatedAt')->textInput() ?>
+    <div class="row">
+        <div class="col-md-12">
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-md-12">
+            <?= $form->field($model, 'status')->widget(Select2::classname(), [
+                'data' => Constant::COMMON_STATUS,
+                'options' => ['placeholder' => 'Select a status ...'],
+                'pluginOptions' => [
+                    'allowClear' => true
+                ],
+            ]);
+            ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

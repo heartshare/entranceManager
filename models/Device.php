@@ -105,7 +105,7 @@ class Device extends \yii\db\ActiveRecord
                $this->status = 1;
            }else{
                $this->status = 0;
-               $this->addError($attribute, Yii::t('app', "The device must be connected, before you add."));
+               $this->addError($attribute, Yii::t('app', "We unable to connect the device. Please try again"));
            }
         }else{
             $this->addError($attribute, Yii::t('app', "IP and Port can't be empty."));

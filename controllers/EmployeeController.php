@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\EmployeesSync;
 use app\models\Employee;
 use app\models\EmployeeSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -87,7 +88,7 @@ class EmployeeController extends Controller
     {
         try {
             if(EmployeesSync::users()){
-                Yii::$app->session->setFlash('success', "User created successfully.");
+                Yii::$app->session->setFlash('success', "Users has been successfully synced.");
                 return $this->redirect(['index']);
             }
             //EmployeesSync::finger();

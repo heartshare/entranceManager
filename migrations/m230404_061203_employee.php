@@ -41,7 +41,7 @@ class m230404_061203_employee extends Migration
         ]);
 
         $this->createIndex('uniqueUid', 'employee', 'uuid', true );
-        $this->createIndex('userIdIndex', 'employee', 'userId' );
+        $this->createIndex('userIdIndex', 'employee', 'userId', true );
     }
 
     public function down()
