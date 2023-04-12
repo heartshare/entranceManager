@@ -90,7 +90,8 @@ class EmployeesSync extends Component
             $commandRel->setRawSql($commandRel->getRawSql() . ' ON DUPLICATE KEY UPDATE employeeId=employeeId');
             $commandRel->execute();
 
-            return $transaction->commit();
+            $transaction->commit();
+            return true;
 
         } catch
         (\Exception $e) {
